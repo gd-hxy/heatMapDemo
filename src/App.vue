@@ -21,7 +21,11 @@
       </el-header>
 
       <el-main>
-        <baidu-map class="bm-view" :center = "center" :zoom = "zoom" @ready="handler"></baidu-map>
+        <baidu-map class="bm-view" :center = "center" :zoom = "zoom" @ready="handler">
+          <bm-navigation anchor = "BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
+          <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
+          <bml-heatmap :data = "heatData" :max = "100" :radius = "20"></bml-heatmap>
+        </baidu-map>
       </el-main>
       </el-container>
     </el-container>
@@ -30,11 +34,17 @@
 
 <script>
 import leftNavBar from './components/leftNavBar'
+import { BmlHeatmap } from 'vue-baidu-map'
 export default {
   name: 'App',
   data (){
     return {
       center: {lng: 0, lat: 0},
+      heatData: [
+        {lng: 116.418261, lat: 39.921984, count: 50},
+        {lng: 116.423332, lat: 39.916532, count: 51},
+        {lng: 116.419787, lat: 39.930658, count: 15}
+      ],
       menuTextColor: '#fff',
       backgroundColor: '#1c2b36',
       activityTextColor: '#ffd04b',
@@ -91,7 +101,8 @@ export default {
     }
   },
   components:{
-    leftNavBar
+    leftNavBar,
+    BmlHeatmap
   },
   methods: {
     handler({BMap, map}){
