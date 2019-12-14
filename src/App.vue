@@ -1,17 +1,97 @@
 <template>
   <div id="app">
-    <baidu-map class="bm-view" :center = "center" :zoom = "zoom" @ready="handler"></baidu-map>
-  </div>
+    
+
+      <el-container class="containerBg" style="background-color: '#1c2b36';">
+      <el-aside style="width: 200px; height:100%;">
+        <el-menu
+      :default-active = "1"
+      class = "el-menu-vertical-demo"
+      :background-color = "backgroundColor"
+      :text-color = 'menuTextColor'
+      :active-text-color = "activityTextColor">
+        <leftNavBar :list = "list"/>
+      </el-menu>
+      </el-aside>
+      <el-container>
+        <el-header class="main_head">
+          <div class="head_right">
+            <el-button circle icon = "el-icon-user"></el-button>
+          </div>
+      </el-header>
+
+      <el-main>
+        <baidu-map class="bm-view" :center = "center" :zoom = "zoom" @ready="handler"></baidu-map>
+      </el-main>
+      </el-container>
+    </el-container>
+    </div>
 </template>
 
 <script>
+import leftNavBar from './components/leftNavBar'
 export default {
   name: 'App',
   data (){
     return {
       center: {lng: 0, lat: 0},
-      zoom: 3
+      menuTextColor: '#fff',
+      backgroundColor: '#1c2b36',
+      activityTextColor: '#ffd04b',
+      zoom: 3,
+      list: [
+        {
+    self: { index: "index", icon: "el-icon-odometer", title: "首页" },
+    child: []
+  },
+  {
+    self: {
+      index: "userlist",
+      icon: "el-icon-s-tools",
+      title: "分类一"
+    },
+    child: [
+      { self: { index: "user", icon: "", title: "功能一" }, child: [] },
+      {
+        self: {
+          index: "usergroup",
+          icon: "",
+          title: "功能二"
+        },
+        child: []
+      },
+      { self: { index: "role", icon: "", title: "功能三" }, child: [] }
+    ]
+  },
+  {
+    self: {
+      index: "pppp",
+      icon: "el-icon-s-management",
+      title: "分类二"
+    },
+    child: [
+      { self: { index: "", icon: "", title: "功能四" }, child: [] },
+      { self: { index: "", icon: "", title: "功能五" }, child: [] }
+    ]
+  },
+  {
+    self: {
+      index: "/user",
+      icon: "el-icon-s-ticket",
+      title: "分类三"
+    },
+    child: [
+      { self: { index: "", icon: "", title: "功能六" }, child: [] },
+      { self: { index: "", icon: "", title: "功能七" }, child: [] },
+      { self: { index: "", icon: "", title: "功能八" }, child: [] },
+      { self: { index: "", icon: "", title: "功能九" }, child: [] }
+    ]
+  },
+      ]
     }
+  },
+  components:{
+    leftNavBar
   },
   methods: {
     handler({BMap, map}){
@@ -20,21 +100,30 @@ export default {
       this.center.lat = 39.915
       this.zoom = 15
     }
-  }
+  },
+  
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.main_head {
+  border-bottom: 1px solid #e7eaec !important;
 }
+.head_right {
+  text-align: right;
+  height: 100%;
+}
+.containerBg {
+  width: 100%;
+  height: 1000px;
+}
+.el-menu-vertical-demo {
+  width: 200px;
+  height: 100%;;
+}
+
 .bm-view{
-  width: 80%;
-  height: 400px;
+  width: 100%;
+  height: 100%;
 }
 </style>
